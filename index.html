@@ -100,6 +100,31 @@
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tbody>
+	    <tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
+              <td style="padding:20px;width:25%;vertical-align:middle">
+                <div class="one">
+                  <img src='images/uda_abstract.png' width="160">
+                </div>
+                <script type="text/javascript">
+                  function clipnerf_start() {
+                    document.getElementById('clipnerf_image').style.opacity = "1";
+                  }
+
+                  function clipnerf_stop() {
+                    document.getElementById('clipnerf_image').style.opacity = "0";
+                  }
+                  clipnerf_stop()
+                </script>
+              </td>
+              <td style="padding:20px;width:75%;vertical-align:middle">
+                  <papertitle>Real World Music Object Recognition</papertitle>
+                <br>
+                <strong>Lukas Tuggener, Raphael Emberger, Adhiraj Ghosh</strong>, Pascal Sager, et al.
+                <br>
+                <p> We present solutions to improve recognition accuracy in Music Object Recognition on low-quality, real-world music sheet data and provide confidence-rated model outputs to enable efficient human post-processing. </p>
+              </td>
+            </tr> 
+
             <tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
               <td style="padding:20px;width:25%;vertical-align:middle">
                 <div class="one">
