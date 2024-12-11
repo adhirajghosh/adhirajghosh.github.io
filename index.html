@@ -52,30 +52,46 @@
           </tr>
         </tbody></table>
 
-        <!-- NEWS -->
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-              <td style="padding:20px;width:100%;vertical-align:middle">
-                <heading>Recent News</heading>
-                <ul>
-		<li><strong>Dec 2024 :</strong> New paper on lifelong open-ended benchmarking out on arXiv! </li>
-		<li><strong>Nov 2024 :</strong> Defended my MS thesis! </li>
-		<li><strong>Sep 2024 :</strong> No Zero-shot was accepted at NeurIPS as a poster! Check out coverage by <a href="https://www.youtube.com/watch?v=dDUC-LqVrPU&t=485s">Computerphile</a> and <a href="https://open.spotify.com/episode/6WhMPw3hm7OFapeExwWUDD">AI 'N Stuff</a>! </li>
-		<li><strong>Dec 2023 :</strong> ViPE awarded outstanding paper at EMNLP!</li>
-		<li><strong>Oct 2023 :</strong> ViPE accepted at EMNLP 2023(main conference).</li>
-		<a href="javascript:void(0);" onclick="toggleBlock('old_news')">---- show more ----</a>
-                  <div id="old_news" style="display: none;">
-		<li><strong>Sep 2023 :</strong> Work on Real World Music Object Recognition published in TISMIR.</li>
-                <li><strong>Mar 2023 :</strong> Started working in the Tubingen AI Centre in Dr. Hendrik Lensch's group.</li>
-		<li><strong>Oct 2022 :</strong> Moved to Germany! Started my MSc at the University of Tübingen.</li>
-		<li><strong>Aug 2022 :</strong> RPTM accepted for oral presentation at WACV 2023. Check out the <a href="https://openaccess.thecvf.com/content/WACV2023/html/Ghosh_Relation_Preserving_Triplet_Mining_for_Stabilising_the_Triplet_Loss_In_WACV_2023_paper.html">paper</a> and  <a href="https://paperswithcode.com/paper/relation-preserving-triplet-mining-for">SOTA comparisons</a>! </li>
-                </div>
-                </div></div>
-                </ul>
-              </td>
-            </tr>
-        </tbody></table>
-
+	<!-- NEWS -->
+	<table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+	  <tbody>
+	    <tr>
+	      <td style="padding:20px;width:100%;vertical-align:middle">
+	        <h2>Recent News</h2>
+	        <ul>
+	          <li><strong>Dec 2024 :</strong> New paper on lifelong open-ended benchmarking out on arXiv!</li>
+	          <li><strong>Nov 2024 :</strong> Defended my MS thesis!</li>
+	          <li><strong>Sep 2024 :</strong> No Zero-shot was accepted at NeurIPS as a poster! Check out coverage by <a href="https://www.youtube.com/watch?v=dDUC-LqVrPU&t=485s">Computerphile</a> and <a href="https://open.spotify.com/episode/6WhMPw3hm7OFapeExwWUDD">AI 'N Stuff</a>!</li>
+	          <li><strong>Dec 2023 :</strong> ViPE awarded outstanding paper at EMNLP!</li>
+	          <li><strong>Oct 2023 :</strong> ViPE accepted at EMNLP 2023 (main conference).</li>
+	        </ul>
+	        <a href="javascript:void(0);" onclick="toggleBlock('old_news')" id="toggle_link">---- Show More ----</a>
+	        <div id="old_news" style="display: none;">
+	          <ul>
+	            <li><strong>Sep 2023 :</strong> Work on Real World Music Object Recognition published in TISMIR.</li>
+	            <li><strong>Mar 2023 :</strong> Started working in the Tubingen AI Centre in Dr. Hendrik Lensch's group.</li>
+	            <li><strong>Oct 2022 :</strong> Moved to Germany! Started my MSc at the University of Tübingen.</li>
+	            <li><strong>Aug 2022 :</strong> RPTM accepted for oral presentation at WACV 2023. Check out the <a href="https://openaccess.thecvf.com/content/WACV2023/html/Ghosh_Relation_Preserving_Triplet_Mining_for_Stabilising_the_Triplet_Loss_In_WACV_2023_paper.html">paper</a> and <a href="https://paperswithcode.com/paper/relation-preserving-triplet-mining-for">SOTA comparisons</a>!</li>
+	          </ul>
+	        </div>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+	<script>
+	function toggleBlock(id) {
+	  const block = document.getElementById(id);
+	  const link = document.getElementById('toggle_link');
+	
+	  if (block.style.display === 'none') {
+	    block.style.display = 'block';
+	    link.innerText = '---- Show Less ----';
+	  } else {
+	    block.style.display = 'none';
+	    link.innerText = '---- Show More ----';
+	  }
+	}
+	</script>
 	<!-- WORK EXPERIENCE -->
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
             <tr>
