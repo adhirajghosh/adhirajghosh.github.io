@@ -122,11 +122,39 @@
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <body>
+		<tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
+              	<td style="padding:20px;width:25%;vertical-align:middle">
+                <div class="one">
+                  <img src='images/eccv_pipeline-1.png' width="160">
+                </div>
+                <script type="text/javascript">
+                  function clipnerf_start() {
+                    document.getElementById('clipnerf_image').style.opacity = "1";
+                  }
 
+                  function clipnerf_stop() {
+                    document.getElementById('clipnerf_image').style.opacity = "0";
+                  }
+                  clipnerf_stop()
+                </script>
+              </td>
+              <td style="padding:20px;width:75%;vertical-align:middle">
+                  <papertitle>ONEBench to Test Them All: Sample-Level Benchmarking Over Open-Ended Capabilities </papertitle>
+                <br>
+                <strong>Adhiraj Ghosh</strong><sup>*</sup>, Sebastian Dziadzio<sup>*</sup>, Ameya Prabhu, Vishaal Udandarao, Samuel Albanie, Matthias Bethge.
+                <br>
+                <em>arXiv:2412.06745, 2024</em>
+                <br>
+		<a href="https://arxiv.org/pdf/2412.06745">Paper </a>
+                <br>
+                <p> To benchmark the vast capabilities of foundation models, we introduce ONEBench – a unifying  benchmark to test an open-ended set of arbitrary capabilities. To address this, we shift the focus from singular test-sets to sample-level evaluations, re-structuring static benchmarks to accommodate an ever-expanding pool of datasets and models. </p>
+              </td>
+            </tr> 
+		  
             <tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
               <td style="padding:20px;width:25%;vertical-align:middle">
                 <div class="one">
-                  <img src='images/eccv_pipeline-1.png' width="160">
+                  <img src='images/onebench.png' width="160">
                 </div>
                 <script type="text/javascript">
                   function clipnerf_start() {
