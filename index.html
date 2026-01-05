@@ -23,13 +23,14 @@
                 <name>Adhiraj Ghosh</name>
               </p>
 		
-		      I am an incoming ELLIS PhD canditate at <a href="https://bethgelab.org/"> Bethge Lab</a>, University of Tübingen. I focus my research on data-centric vision-language. I recently completed my MSc in Machine Learning at the University of Tübingen.
-		
-		      Previously, I worked on visualising figurative speech at the <a href="https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/computergrafik/lehrstuhl/">Computer Graphics Group</a>, which led to an Outstanding Paper award at EMNLP 2023.
+		      I am a first year <a href="https://ellis.eu/">ELLIS</a> PhD canditate working with <a href="https://bethgelab.org/">Dr. Matthias Bethge</a> at the University of Tübingen. I am also affiliated with the <a href="https://imprs.is.mpg.de/">International Max Planck Research School for Intelligent Systems</a>. My interests are mostly centred around developing data-centric approaches to improve machine learning models across several modalities (text, image, video, audio and 3D) as well as exposing the failure points of these models by creating better eval sets and benchmarking strategies. 
+			  </p>
+			  <p>
+			  I completed my MSc in Machine Learning at the University of Tübingen in 2024, during which I worked on visualising figurative speech at the <a href="https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/computergrafik/lehrstuhl/">Computer Graphics Group</a>, which led to an Outstanding Paper award at EMNLP 2023.
               </p>
               <p>
                       Before starting my master's, I used to be a Computer Vision Researcher at the Center of Artificial Intelligence,<a href="https://www.zhaw.ch/en/engineering/institutes-centres/cai/">ZHAW</a>, working on domain adaptation in Optical Music Recognition. 
-		      I have also worked with <a href="https://scholar.google.com/citations?user=cGClKZkAAAAJ&hl=en">Dr. Daniel Lin Wen-Yan</a> at SMU on feature correspondence-based object tracking. I studied Electrical and Electronics Engineering for my BSc in Manipal/Singapore.
+		      I have also worked with <a href="https://scholar.google.com/citations?user=cGClKZkAAAAJ&hl=en">Dr. Daniel Lin Wen-Yan</a> at SMU on feature correspondence-based object tracking. I completed my BSc in Electrical and Electronics Engineering in Manipal/Singapore.
               </p>
 	      <p>
                       I am very eager to collaborate on relevant projects, so please reach out if you are interested!
@@ -58,17 +59,17 @@
 	      <td style="padding:20px;width:100%;vertical-align:middle">
 	        <h2>Recent News</h2>
 	        <ul>
-	          <li><strong>Dec 2024 :</strong> New paper on lifelong open-ended benchmarking out on arXiv!</li>
-	          <li><strong>Nov 2024 :</strong> Defended my MS thesis!</li>
+			  <li><strong>Nov 2025 :</strong> Work on concept-aware online batch sampling out on arXiv! </li>
+			  <li><strong>Jun 2025 :</strong> Started my PhD! </li>
+	          <li><strong>May 2025 :</strong> ONEBench accepted at ACL 2025 as a poster!</li>
+	          <li><strong>Nov 2024 :</strong> Defended my MSc thesis!</li>
 	          <li><strong>Sep 2024 :</strong> No Zero-shot was accepted at NeurIPS as a poster! Check out coverage by <a href="https://www.youtube.com/watch?v=dDUC-LqVrPU&t=485s">Computerphile</a> and <a href="https://open.spotify.com/episode/6WhMPw3hm7OFapeExwWUDD">AI 'N Stuff</a>!</li>
-	          <li><strong>Dec 2023 :</strong> ViPE awarded outstanding paper at EMNLP!</li>
-	          <li><strong>Oct 2023 :</strong> ViPE accepted at EMNLP 2023 (main conference).</li>
 	        </ul>
 	        <a href="javascript:void(0);" onclick="toggleBlock('old_news')" id="toggle_link">---- Show More ----</a>
 	        <div id="old_news" style="display: none;">
 	          <ul>
+				<li><strong>Dec 2023 :</strong> ViPE awarded outstanding paper at EMNLP 2023!</li>
 	            <li><strong>Sep 2023 :</strong> Work on Real World Music Object Recognition published in TISMIR.</li>
-	            <li><strong>Mar 2023 :</strong> Started working in the Tubingen AI Centre in Dr. Hendrik Lensch's group.</li>
 	            <li><strong>Oct 2022 :</strong> Moved to Germany! Started my MSc at the University of Tübingen.</li>
 	            <li><strong>Aug 2022 :</strong> RPTM accepted for oral presentation at WACV 2023. Check out the <a href="https://openaccess.thecvf.com/content/WACV2023/html/Ghosh_Relation_Preserving_Triplet_Mining_for_Stabilising_the_Triplet_Loss_In_WACV_2023_paper.html">paper</a> and <a href="https://paperswithcode.com/paper/relation-preserving-triplet-mining-for">SOTA comparisons</a>!</li>
 	          </ul>
@@ -121,6 +122,36 @@
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <body>
+
+		<tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
+              	<td style="padding:20px;width:25%;vertical-align:middle">
+                <div class="one">
+                  <img src='images/cabs.png' width="160">
+                </div>
+                <script type="text/javascript">
+                  function clipnerf_start() {
+                    document.getElementById('clipnerf_image').style.opacity = "1";
+                  }
+
+                  function clipnerf_stop() {
+                    document.getElementById('clipnerf_image').style.opacity = "0";
+                  }
+                  clipnerf_stop()
+                </script>
+              </td>
+              <td style="padding:20px;width:75%;vertical-align:middle">
+                  <papertitle>Concept-Aware Batch Sampling Improves Language-Image Pretraining </papertitle>
+                <br>
+                <strong>Adhiraj Ghosh</strong>, Vishaal Udandarao<sup>*</sup>, Thao Nguyen<sup>*</sup>, Matteo Farina<sup>*</sup>, Mehdi Cherti, Jenia Jitsev, Sewoong Oh, Elisa Ricci, Ludwig Schmidt, Matthias Bethge.
+                <br>
+                <em>arXiv:2511.20643, 2025</em>
+                <br>
+		<a href="https://arxiv.org/pdf/2511.20643">Paper </a>
+                <br>
+                <p> In this work, we show that concept-aware data curation and online batch sampling improves the downstream performance of contrastive vision-language models. We introduce DataConcept, 128M image-text pairs annotated with concept-centric information, and Concept-Aware Batch Sampling (CABS), a framework to use concept information to curate batches online instead of static curation. </p>
+              </td>
+            </tr> 
+			  
 		<tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
               	<td style="padding:20px;width:25%;vertical-align:middle">
                 <div class="one">
