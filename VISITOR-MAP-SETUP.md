@@ -67,7 +67,18 @@ Only **one** secret is needed.
    (It reads "No data available" until you do. Note that `Share` carries no
    upgrade notice, unlike `Replays & Heatmaps` which says "requires a Business
    plan" — that is how you can tell sharing is not plan-gated.)
-   You get a URL like
+   Umami then asks which sections to expose. **Check only `Overview`** under
+   *Traffic*, and nothing under *Behavior* or *Growth*. `Overview` is what
+   authorises `/metrics?type=country`, `/metrics?type=city` and `/stats` — the
+   only three calls the globe makes.
+
+   Leave **`Sessions`** unchecked in particular: it exposes individual session
+   records including per-visitor location, which is the same problem that makes
+   MapMyVisitors' public dashboards a liability. Anyone holding the slug sees
+   whatever is ticked here, so expose the minimum. `Realtime` likewise shows
+   live visitors to anyone with the link.
+
+   You then get a URL like
    `https://cloud.umami.is/share/aB3xY9zQ7pKm/adhirajghosh.github.io`.
    Copy the **slug** — the `aB3xY9zQ7pKm` segment only, not the whole URL.
 2. In GitHub: **Settings → Secrets and variables → Actions → New repository
