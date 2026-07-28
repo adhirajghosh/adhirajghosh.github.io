@@ -11,22 +11,25 @@ cannot work until Umami is collecting.
 
 ---
 
-## Step 1 — Turn on visitor counting (10 minutes, required)
+## Step 1 — Turn on visitor counting — DONE
 
-1. Sign up at <https://cloud.umami.is>. The free Hobby plan is enough by a wide
-   margin: 100k events/month against a homepage that will use a tiny fraction of
-   that. No credit card.
-2. **Pick the EU region if you are offered the choice at signup**, since you are
-   at a European institution.
-3. Add a website with domain `adhirajghosh.github.io`.
-4. Copy the **website ID** (a UUID) from Settings → Websites → Edit.
-5. In `index.html`, find the commented-out block near the bottom marked
-   `STEP 1`, uncomment it, and paste your ID in place of
-   `YOUR-UMAMI-WEBSITE-ID`.
+Account created on Umami Cloud (US region) and the tracker is live at the bottom
+of `index.html` with website ID `905a7464-541f-4519-bbab-347c7be4f8e0`.
 
-That alone gets you a dashboard with country, region and city breakdowns, a
-world map, referrers, and pages — everything RevolverMaps used to show you and
-more. **If you stop here, you still have working analytics.**
+This alone gives a dashboard with country, region and city breakdowns, a world
+map, referrers, and pages — everything RevolverMaps used to show, and more.
+
+Two notes on it:
+
+- `data-domains="adhirajghosh.github.io"` on the script tag keeps forks and local
+  copies out of the stats. **If this site ever moves to a custom domain, that
+  attribute must be updated or counting will silently stop.**
+- The **US region** was chosen. That is fine. Umami Software is a US company
+  either way (San Francisco), and its DPA covers EEA/UK/Swiss transfers with
+  Standard Contractual Clauses regardless of which region holds the data, so the
+  EU region would not have changed the legal basis. What matters for avoiding a
+  consent banner is that Umami is cookieless and sets no client-side storage,
+  which is region-independent.
 
 Why Umami over the alternatives, briefly:
 
@@ -58,12 +61,29 @@ The globe reads `data/visitor-globe.json`, which is regenerated on every deploy
 and once a day by `scripts/build-visitor-globe.mjs`. The Umami API key stays in
 GitHub Actions secrets and never reaches the browser.
 
-1. In Umami: Settings → API keys → create a key.
-2. In GitHub: repo Settings → Secrets and variables → Actions → New repository
-   secret, twice:
-   - `UMAMI_API_KEY` — the key from step 1
-   - `UMAMI_WEBSITE_ID` — the same website UUID as before
-3. Push, or run the "Deploy static content to Pages" workflow manually.
+Only **one** secret is needed. The website ID is already hardcoded in the
+workflow, because it is public by design — it ships in `index.html` so the
+tracker can identify the site, so hiding it in a secret would gain nothing.
+
+1. In Umami: **Settings → API keys → Create key**. Copy it; it is shown once.
+2. In GitHub: **Settings → Secrets and variables → Actions → New repository
+   secret**. Name it exactly `UMAMI_API_KEY` and paste the key as the value.
+   Direct link: <https://github.com/adhirajghosh/adhirajghosh.github.io/settings/secrets/actions>
+3. Trigger a deploy — either push anything, or **Actions → "Deploy static content
+   to Pages" → Run workflow**.
+
+Then check the run log for the `Refresh visitor globe data` step. On success it
+prints something like:
+
+```
+visitor-globe: wrote 12 countries, 995/1052 visitors placed -> data/visitor-globe.json
+```
+
+The two numbers differ on purpose: the second is every visitor Umami counted, the
+first is the subset with a resolvable country that could be placed on the globe.
+
+The globe needs at least one visitor with a resolvable country before it appears,
+so if you have just set this up, give it a little traffic first.
 
 Until both secrets exist the build step logs a warning, writes nothing, and the
 deploy continues normally. The globe stays hidden while the JSON has no markers,

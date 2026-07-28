@@ -44,8 +44,12 @@ jobs:
       - name: Refresh visitor globe data
         continue-on-error: true
         env:
+          # The API key is the only real secret here.
           UMAMI_API_KEY: ${{ secrets.UMAMI_API_KEY }}
-          UMAMI_WEBSITE_ID: ${{ secrets.UMAMI_WEBSITE_ID }}
+          # The website ID is public by design — it ships in index.html so the
+          # tracker can identify the site — so there is nothing gained by
+          # hiding it in a secret.
+          UMAMI_WEBSITE_ID: 905a7464-541f-4519-bbab-347c7be4f8e0
         run: node scripts/build-visitor-globe.mjs
       - name: Setup Pages
         uses: actions/configure-pages@v3

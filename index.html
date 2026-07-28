@@ -381,12 +381,13 @@
   </table>
   <script type="module" src="js/visitor-globe.js"></script>
 
-  <!-- STEP 1 of VISITOR-MAP-SETUP.md: uncomment the two lines below and paste
-       your Umami website ID. This is what actually counts visitors and locates
-       them; the globe above is only a picture of the data it collects, so
-       nothing appears until this is running. Cookieless, no consent banner.
+  <!-- Umami analytics: cookieless, sets no client-side storage, so no consent
+       banner. This is what counts visitors and geolocates them; the globe above
+       only renders the result. data-domains keeps forks and local copies out of
+       the stats — it must be updated if this site ever moves to another domain,
+       or counting will silently stop. -->
   <script defer src="https://cloud.umami.is/script.js"
-          data-website-id="YOUR-UMAMI-WEBSITE-ID" data-domains="adhirajghosh.github.io"></script>
-  -->
+          data-website-id="905a7464-541f-4519-bbab-347c7be4f8e0"
+          data-domains="adhirajghosh.github.io"></script>
 </body>
 </html>
