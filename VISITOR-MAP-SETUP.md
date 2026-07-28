@@ -63,9 +63,13 @@ instead authenticates with a **share token**, which is ungated on the free plan.
 
 Only **one** secret is needed.
 
-1. In Umami: **Websites → Edit → Enable share URL**. You get a URL like
-   `https://cloud.umami.is/share/aB3xY9zQ.../adhirajghosh.github.io`.
-   Copy the **slug** — the `aB3xY9zQ...` segment, not the whole URL.
+1. In Umami: **Websites → Edit**, scroll to the **Share** section, click **Add**.
+   (It reads "No data available" until you do. Note that `Share` carries no
+   upgrade notice, unlike `Replays & Heatmaps` which says "requires a Business
+   plan" — that is how you can tell sharing is not plan-gated.)
+   You get a URL like
+   `https://cloud.umami.is/share/aB3xY9zQ7pKm/adhirajghosh.github.io`.
+   Copy the **slug** — the `aB3xY9zQ7pKm` segment only, not the whole URL.
 2. In GitHub: **Settings → Secrets and variables → Actions → New repository
    secret**. Name it exactly `UMAMI_SHARE_SLUG` and paste the slug.
    Direct link: <https://github.com/adhirajghosh/adhirajghosh.github.io/settings/secrets/actions>
