@@ -1,10 +1,11 @@
 // Rotating visitor globe for the homepage — the replacement for the RevolverMaps
 // widget, which shut down in November 2024.
 //
-// Data comes from data/visitor-globe.json, regenerated at deploy time by
-// scripts/build-visitor-globe.mjs from the Umami analytics API. Nothing here
-// tracks anyone: the page-view beacon is a separate script in index.html, and
-// this file only reads an already-aggregated, per-country JSON file.
+// Dots are cities, sized by session count. Data comes from
+// data/visitor-globe.json, regenerated at deploy time by
+// scripts/build-visitor-globe.mjs from Umami analytics. Nothing here tracks
+// anyone: the page-view beacon is a separate script in index.html, and this file
+// only reads an already-aggregated JSON file.
 //
 // The widget stays hidden unless it has both WebGL and real data, so a failed
 // fetch or an empty dataset leaves no broken frame on the page.
@@ -28,6 +29,7 @@ const GLOBE_STYLE = {
 const ROTATION_PER_FRAME = 0.0035;
 const MAX_SIZE = 260;
 const MIN_SIZE = 180;
+const LIST_LENGTH = 8;
 
 const root = document.getElementById('visitor-globe');
 if (root) init(root).catch(() => {});
@@ -44,9 +46,11 @@ function flagEmoji(code) {
     : '';
 }
 
+let regionNames = null;
 function countryName(code) {
   try {
-    return new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code;
+    regionNames ||= new Intl.DisplayNames(['en'], { type: 'region' });
+    return regionNames.of(code) || code;
   } catch {
     return code;
   }
@@ -70,14 +74,80 @@ async function init(root) {
   if (!markers.length) return;
 
   root.hidden = false;
-  render(root, data, markers);
+  renderText(root, data);
+  renderGlobe(root, markers);
 }
 
-function render(root, data, markers) {
-  const canvas = root.querySelector('canvas');
-  const caption = root.querySelector('[data-globe-caption]');
-  const list = root.querySelector('[data-globe-countries]');
+// Builds "🇩🇪 Germany 412" rows. Uses textContent throughout: city names arrive
+// from an external API and must never be interpolated as markup.
+function renderList(container, heading, rows) {
+  if (!container) return;
+  container.textContent = '';
 
+  const title = document.createElement('div');
+  title.textContent = heading;
+  title.style.cssText = 'font-weight:700;margin-bottom:4px';
+  container.appendChild(title);
+
+  for (const row of rows.slice(0, LIST_LENGTH)) {
+    const line = document.createElement('div');
+    line.style.cssText = 'display:flex;justify-content:space-between;gap:10px;line-height:1.55';
+
+    const label = document.createElement('span');
+    label.textContent = `${flagEmoji(row.code)} ${row.label}`.trim();
+    label.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+
+    const count = document.createElement('span');
+    count.textContent = row.sessions.toLocaleString('en-US');
+    count.style.cssText = 'color:#777;flex:none';
+
+    line.append(label, count);
+    container.appendChild(line);
+  }
+}
+
+function renderText(root, data) {
+  const caption = root.querySelector('[data-globe-caption]');
+  const note = root.querySelector('[data-globe-note]');
+  const totals = data.totals || {};
+
+  if (caption) {
+    const visitors = totals.visitors || 0;
+    const bits = [`${visitors.toLocaleString('en-US')} ${visitors === 1 ? 'visitor' : 'visitors'}`];
+    if (totals.countries) bits.push(`${totals.countries} ${totals.countries === 1 ? 'country' : 'countries'}`);
+    if (totals.cities) bits.push(`${totals.cities} ${totals.cities === 1 ? 'city' : 'cities'}`);
+    caption.textContent = bits.join(' · ') + (data.since ? ` · since ${data.since}` : '');
+  }
+
+  renderList(
+    root.querySelector('[data-globe-countries]'),
+    'Top countries',
+    (data.countries || []).map((c) => ({ code: c.country, label: countryName(c.country), sessions: c.sessions })),
+  );
+  renderList(
+    root.querySelector('[data-globe-cities]'),
+    'Top cities',
+    (data.cities || []).map((c) => ({ code: c.country, label: c.city, sessions: c.sessions })),
+  );
+
+  // Say plainly how much of the traffic the dots actually represent, and that
+  // unresolvable cities are shown on their country rather than omitted.
+  if (note) {
+    const cov = data.coverage || {};
+    const parts = [];
+    if (cov.citiesTotal) parts.push(`${cov.citiesGeocoded}/${cov.citiesTotal} cities located`);
+    if (cov.countrySessions && cov.mappedSessions) {
+      const pct = Math.round((cov.mappedSessions / cov.countrySessions) * 100);
+      parts.push(`${pct}% of located sessions shown`);
+    }
+    note.textContent = parts.length
+      ? `${parts.join(' · ')}. Sessions without a resolvable city are shown on their country.`
+      : '';
+  }
+}
+
+function renderGlobe(root, markers) {
+  const canvas = root.querySelector('canvas');
   let size = measure(root);
   canvas.style.width = `${size}px`;
   canvas.style.height = `${size}px`;
@@ -91,22 +161,6 @@ function render(root, data, markers) {
     devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
     markers: markers.map(({ location, size: markerSize }) => ({ location, size: markerSize })),
   });
-
-  if (caption) {
-    const visitors = data.totalVisitors || 0;
-    const countries = data.totalCountries || markers.length;
-    const since = data.since ? ` since ${data.since}` : '';
-    caption.textContent =
-      `${visitors.toLocaleString('en-US')} ${visitors === 1 ? 'visitor' : 'visitors'} ` +
-      `from ${countries} ${countries === 1 ? 'country' : 'countries'}${since}`;
-  }
-
-  if (list) {
-    list.textContent = markers
-      .slice(0, 5)
-      .map((m) => `${flagEmoji(m.country)} ${countryName(m.country)} ${m.visitors.toLocaleString('en-US')}`)
-      .join('  ·  ');
-  }
 
   animate(root, canvas, globe, () => size, (next) => { size = next; });
 }
@@ -129,9 +183,7 @@ function animate(root, canvas, globe, getSize, setSize) {
     frame = requestAnimationFrame(draw);
   };
 
-  const start = () => {
-    if (frame === null) frame = requestAnimationFrame(draw);
-  };
+  const start = () => { if (frame === null) frame = requestAnimationFrame(draw); };
   const stop = () => {
     if (frame !== null) cancelAnimationFrame(frame);
     frame = null;

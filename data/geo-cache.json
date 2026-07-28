@@ -1,0 +1,6 @@
+{
+  "_note": "City -> [lat, lng] cache for the visitor globe, written by scripts/geocode.mjs and committed by CI. 'hits' are resolved coordinates; 'misses' are names that could not be geocoded, retried after 30 days. Keys are 'lowercased city name|ISO country code'. Safe to delete: it will rebuild itself, at the cost of re-querying the geocoder.",
+  "version": 1,
+  "hits": {},
+  "misses": {}
+}

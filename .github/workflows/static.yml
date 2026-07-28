@@ -14,9 +14,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages.
+# contents: write (rather than read) so the geocode cache can be committed back.
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -36,21 +37,39 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # Regenerates data/visitor-globe.json for the homepage globe. The Umami
-      # API key stays here in Actions and never reaches the browser; only the
-      # aggregated per-country counts are published. Deliberately non-fatal:
-      # if the secrets are missing or the API is down, the previous JSON ships
-      # unchanged and the site still deploys.
+      # Regenerates data/visitor-globe.json for the homepage globe. Auth is a
+      # share token rather than an API key, because API keys need Umami Cloud's
+      # Pro plan while share URLs work on the free tier. The slug is held as a
+      # secret only because anyone holding it can read the full public
+      # dashboard; it is not needed to keep the analytics working.
+      # Deliberately non-fatal: if the secret is missing or Umami is down, the
+      # previous JSON ships unchanged and the site still deploys.
       - name: Refresh visitor globe data
         continue-on-error: true
         env:
-          # The API key is the only real secret here.
-          UMAMI_API_KEY: ${{ secrets.UMAMI_API_KEY }}
-          # The website ID is public by design — it ships in index.html so the
-          # tracker can identify the site — so there is nothing gained by
-          # hiding it in a secret.
+          UMAMI_SHARE_SLUG: ${{ secrets.UMAMI_SHARE_SLUG }}
+          # Region must match the account. A mismatch returns empty results
+          # rather than an error, so it is pinned explicitly.
+          UMAMI_REGION: us
+          # Public by design — it ships in index.html so the tracker can
+          # identify the site. Used here only to catch a share slug pasted
+          # from the wrong website.
           UMAMI_WEBSITE_ID: 905a7464-541f-4519-bbab-347c7be4f8e0
         run: node scripts/build-visitor-globe.mjs
+      # Only the geocode cache is committed. visitor-globe.json is left as a
+      # build artifact: it is fully derived and regenerated every run, so
+      # committing it would churn the history for no benefit. Pushes made with
+      # GITHUB_TOKEN do not trigger workflows, so this cannot loop.
+      - name: Persist geocode cache
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/geo-cache.json
+          git diff --staged --quiet || {
+            git commit -m "Update visitor globe geocode cache"
+            git push
+          }
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

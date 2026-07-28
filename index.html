@@ -371,10 +371,18 @@
         <td style="padding:20px;width:100%;vertical-align:middle;text-align:center">
           <heading>Visitors</heading>
           <p style="margin:10px 0 0 0">
-            <canvas width="260" height="260" style="width:260px;height:260px;max-width:100%;display:inline-block;touch-action:pan-y" aria-label="Rotating globe marking the countries this site's visitors come from"></canvas>
+            <canvas width="260" height="260" style="width:260px;height:260px;max-width:100%;display:inline-block;touch-action:pan-y" aria-label="Rotating globe with a dot on each city this site's visitors come from"></canvas>
           </p>
           <p data-globe-caption style="margin:2px 0 0 0;color:#555"></p>
-          <p data-globe-countries style="margin:2px 0 0 0;font-size:12px;color:#777"></p>
+          <table style="width:100%;max-width:520px;border:0px;border-spacing:0px;margin:14px auto 0 auto">
+            <tbody>
+              <tr>
+                <td data-globe-countries style="width:50%;vertical-align:top;text-align:left;padding:0 12px;font-size:13px"></td>
+                <td data-globe-cities style="width:50%;vertical-align:top;text-align:left;padding:0 12px;font-size:13px"></td>
+              </tr>
+            </tbody>
+          </table>
+          <p data-globe-note style="margin:12px 0 0 0;font-size:11px;color:#999"></p>
         </td>
       </tr>
     </tbody>
