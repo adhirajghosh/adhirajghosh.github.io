@@ -1,0 +1,10 @@
+{
+  "_note": "Placeholder. Regenerated at deploy time by scripts/build-visitor-globe.mjs from the Umami API. While markers is empty the globe stays hidden on the page. See VISITOR-MAP-SETUP.md.",
+  "generatedAt": null,
+  "since": null,
+  "totalVisitors": 0,
+  "totalPageviews": 0,
+  "totalCountries": 0,
+  "placedVisitors": 0,
+  "markers": []
+}

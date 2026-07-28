@@ -6,6 +6,11 @@ on:
   push:
     branches: ["main"]
 
+  # Redeploys once a day so the visitor globe's data stays current even when
+  # nothing has been pushed.
+  schedule:
+    - cron: "17 4 * * *"
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -31,6 +36,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      # Regenerates data/visitor-globe.json for the homepage globe. The Umami
+      # API key stays here in Actions and never reaches the browser; only the
+      # aggregated per-country counts are published. Deliberately non-fatal:
+      # if the secrets are missing or the API is down, the previous JSON ships
+      # unchanged and the site still deploys.
+      - name: Refresh visitor globe data
+        continue-on-error: true
+        env:
+          UMAMI_API_KEY: ${{ secrets.UMAMI_API_KEY }}
+          UMAMI_WEBSITE_ID: ${{ secrets.UMAMI_WEBSITE_ID }}
+        run: node scripts/build-visitor-globe.mjs
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

@@ -359,6 +359,34 @@
       </td>
     </tr>
   </table>
+
+  <!-- Visitor globe. Replaces the RevolverMaps widget, which shut down on
+       15 Nov 2024; its domain no longer resolves at all. Markers come from
+       data/visitor-globe.json, rebuilt at deploy time from the Umami API by
+       scripts/build-visitor-globe.mjs. Stays hidden until that file has data,
+       so a failed build leaves no empty frame here. See VISITOR-MAP-SETUP.md. -->
+  <table id="visitor-globe" hidden style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+    <tbody>
+      <tr>
+        <td style="padding:20px;width:100%;vertical-align:middle;text-align:center">
+          <heading>Visitors</heading>
+          <p style="margin:10px 0 0 0">
+            <canvas width="260" height="260" style="width:260px;height:260px;max-width:100%;display:inline-block;touch-action:pan-y" aria-label="Rotating globe marking the countries this site's visitors come from"></canvas>
+          </p>
+          <p data-globe-caption style="margin:2px 0 0 0;color:#555"></p>
+          <p data-globe-countries style="margin:2px 0 0 0;font-size:12px;color:#777"></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <script type="module" src="js/visitor-globe.js"></script>
+
+  <!-- STEP 1 of VISITOR-MAP-SETUP.md: uncomment the two lines below and paste
+       your Umami website ID. This is what actually counts visitors and locates
+       them; the globe above is only a picture of the data it collects, so
+       nothing appears until this is running. Cookieless, no consent banner.
+  <script defer src="https://cloud.umami.is/script.js"
+          data-website-id="YOUR-UMAMI-WEBSITE-ID" data-domains="adhirajghosh.github.io"></script>
+  -->
 </body>
-<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5x7yq9wz12a&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33" async="async"></script>
 </html>
