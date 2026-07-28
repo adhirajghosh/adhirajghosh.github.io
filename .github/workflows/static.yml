@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       # Regenerates data/visitor-globe.json for the homepage globe. Auth is a
       # share token rather than an API key, because API keys need Umami Cloud's
       # Pro plan while share URLs work on the free tier. The slug is held as a
@@ -70,13 +70,21 @@ jobs:
             git commit -m "Update visitor globe geocode cache"
             git push
           }
+      # enablement: true points the repo's Pages source at GitHub Actions if it
+      # is not already. It was deploying from the main branch, which is why this
+      # workflow's artifact never reached the live site: a branch deploy ignores
+      # uploaded artifacts entirely. Doing it here means the switch and the first
+      # successful Actions deploy land in the same run, leaving no window where
+      # the site is unpublished. Reversible via Settings -> Pages -> Source.
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v5
         with:
           # Upload entire repository
           path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v5
