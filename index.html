@@ -395,19 +395,11 @@
 
   <!-- Umami analytics: cookieless, sets no client-side storage, so no consent
        banner. This is what counts visitors and geolocates them; the globe above
-       only renders the result. data-domains must list every hostname that should
-       count — it must be updated if this site ever moves to another domain, or
-       counting will silently stop, and it is what keeps forks of this repo from
-       reporting into these stats.
-
-       localhost and 127.0.0.1 are listed so local testing shows up while working
-       on the globe. Be aware of the cost: your own dev traffic is then real
-       traffic, and lands as dots on your own city. Remove those two entries when
-       you are done testing, or set the tracker's opt-out in the browser you
-       develop in (see VISITOR-MAP-SETUP.md) to get local counting without the
-       pollution. -->
+       only renders the result. data-domains keeps forks and local copies out of
+       the stats — it must be updated if this site ever moves to another domain,
+       or counting will silently stop. -->
   <script defer src="https://cloud.umami.is/script.js"
           data-website-id="905a7464-541f-4519-bbab-347c7be4f8e0"
-          data-domains="adhirajghosh.github.io,localhost,127.0.0.1"></script>
+          data-domains="adhirajghosh.github.io"></script>
 </body>
 </html>

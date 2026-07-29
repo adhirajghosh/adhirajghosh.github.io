@@ -21,16 +21,9 @@ map, referrers, and pages — everything RevolverMaps used to show, and more.
 
 Two notes on it:
 
-- `data-domains` on the script tag lists every hostname allowed to report, which
-  is what keeps forks of this repo out of the stats. **If this site ever moves to
-  a custom domain, that attribute must be updated or counting will silently
-  stop.** It currently reads `adhirajghosh.github.io,localhost,127.0.0.1`:
-  `localhost` and `127.0.0.1` are there so local testing registers while working
-  on the globe. That means dev traffic is counted as real traffic and lands as
-  dots on your own city — drop those two entries when finished, or keep them and
-  set the opt-out below in the browser you develop in. The two compose: the
-  opt-out wins over `data-domains`, so a browser with the flag set is silent even
-  on an allowed hostname.
+- `data-domains="adhirajghosh.github.io"` on the script tag keeps forks and local
+  copies out of the stats. **If this site ever moves to a custom domain, that
+  attribute must be updated or counting will silently stop.**
 - The **US region** was chosen. That is fine. Umami Software is a US company
   either way (San Francisco), and its DPA covers EEA/UK/Swiss transfers with
   Standard Contractual Clauses regardless of which region holds the data, so the
@@ -177,10 +170,9 @@ results are re-ranked rather than taking the first.
 
   To cover every browser and device at once, block `cloud.umami.is` in Pi-hole,
   the router, or `/etc/hosts` instead. Most content blockers (uBlock Origin, Brave
-  shields) already block it, so you may have been uncounted all along. Note that
-  local copies are **no longer** excluded: `data-domains` now allows `localhost`
-  and `127.0.0.1` so local testing registers, so the opt-out is what keeps your
-  dev browsing out of the stats.
+  shields) already block it, so you may have been uncounted all along. Local copies
+  are excluded already: `data-domains` limits counting to `adhirajghosh.github.io`,
+  and Umami ignores `localhost` regardless.
 - Until the secret exists the build step logs a warning and the deploy continues
   normally. The globe stays hidden while the JSON has no markers, so the page
   never shows an empty frame.
