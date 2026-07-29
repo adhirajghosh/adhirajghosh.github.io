@@ -148,6 +148,31 @@ results are re-ranked rather than taking the first.
   datacenter IPs, so they are not removed.
 - Umami Cloud's free plan retains **6 months**, so this is a rolling window, not
   an all-time total.
+- **Excluding your own visits cannot be done by IP.** Umami hashes the IP together
+  with the user agent and website ID into a session ID at ingest and stores only
+  that hash — the raw IP is discarded before anything is written. So there is no
+  field an exclusion list could match on, on any plan, and nowhere to enter one.
+  This is the same reason the dashboard has no IP column.
+
+  What works instead is the tracker's own opt-out, set per browser. Load the site,
+  then in the console:
+
+  ```js
+  localStorage.setItem('umami.disabled', 1)   // remove with localStorage.removeItem
+  ```
+
+  `script.js` checks that key before every send, so nothing leaves the browser.
+  Scope worth being precise about: `localStorage` is per-origin **per browser
+  profile**, so this excludes only whoever set it — every other visitor has their
+  own empty storage and is counted normally. It is not a site-wide switch, it is
+  not visible in the page source, and it survives nothing: repeat it in each
+  browser you use, and after clearing site data.
+
+  To cover every browser and device at once, block `cloud.umami.is` in Pi-hole,
+  the router, or `/etc/hosts` instead. Most content blockers (uBlock Origin, Brave
+  shields) already block it, so you may have been uncounted all along. Local copies
+  are excluded already: `data-domains` limits counting to `adhirajghosh.github.io`,
+  and Umami ignores `localhost` regardless.
 - Until the secret exists the build step logs a warning and the deploy continues
   normally. The globe stays hidden while the JSON has no markers, so the page
   never shows an empty frame.
