@@ -138,6 +138,22 @@ results are re-ranked rather than taking the first.
 - Until the secret exists the build step logs a warning and the deploy continues
   normally. The globe stays hidden while the JSON has no markers, so the page
   never shows an empty frame.
+- **Pages must deploy from GitHub Actions, not from a branch.** This is the one
+  failure mode where everything looks green and the globe is still missing:
+  `data/visitor-globe.json` is generated during the run and never committed, so a
+  branch-source build publishes the committed placeholder — no markers, widget
+  hidden. The workflow's `Setup Pages` step does *not* fix this; `enablement`
+  only creates a Pages site that does not exist yet. Verify with:
+
+  ```sh
+  gh api repos/adhirajghosh/adhirajghosh.github.io/pages --jq .build_type  # want "workflow"
+  gh api -X PUT repos/adhirajghosh/adhirajghosh.github.io/pages -f build_type=workflow
+  ```
+
+  A quicker tell: compare `generatedAt` in
+  <https://adhirajghosh.github.io/data/visitor-globe.json> against the run log. If
+  the log says "N dots drawn" but the live file is still the placeholder, the
+  deploy is the problem, not Umami.
 
 Optional environment overrides:
 
