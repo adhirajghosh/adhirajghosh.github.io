@@ -55,9 +55,11 @@ const EXPECT_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID;
 // Public URL of the shared dashboard, written into the JSON so the globe can link
 // to it. Derived from the slug rather than hardcoded in index.html, which keeps
 // the slug out of git history — but be clear-eyed that publishing this makes the
-// dashboard world-readable, so the share must expose Overview only. Umami resolves
-// a share by its slug and treats the trailing segment as a label, hence the
-// override for a website named something other than the domain.
+// dashboard world-readable, and the share deliberately exposes Sessions (the
+// recent-visitors list, with browser and OS) as well as Overview. Set
+// UMAMI_SHARE_URL='' to stop publishing the link. Umami resolves a share by its
+// slug and treats the trailing segment as a label, hence the override for a
+// website named something other than the domain.
 const SHARE_LABEL = process.env.UMAMI_SHARE_NAME || 'adhirajghosh.github.io';
 // Checked against undefined, not falsiness, so UMAMI_SHARE_URL='' is an explicit
 // "publish no link" rather than silently falling back to the derived URL.

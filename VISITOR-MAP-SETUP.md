@@ -67,16 +67,22 @@ Only **one** secret is needed.
    (It reads "No data available" until you do. Note that `Share` carries no
    upgrade notice, unlike `Replays & Heatmaps` which says "requires a Business
    plan" — that is how you can tell sharing is not plan-gated.)
-   Umami then asks which sections to expose. **Check only `Overview`** under
-   *Traffic*, and nothing under *Behavior* or *Growth*. `Overview` is what
+   Umami then asks which sections to expose. `Overview` under *Traffic* is what
    authorises `/metrics?type=country`, `/metrics?type=city` and `/stats` — the
-   only three calls the globe makes.
+   only three calls the globe makes — so it must stay ticked or the globe goes
+   blank.
 
-   Leave **`Sessions`** unchecked in particular: it exposes individual session
-   records including per-visitor location, which is the same problem that makes
-   MapMyVisitors' public dashboards a liability. Anyone holding the slug sees
-   whatever is ticked here, so expose the minimum. `Realtime` likewise shows
-   live visitors to anyone with the link.
+   **`Sessions` is ticked deliberately**, to get the recent-visitors list with its
+   Browser and OS columns on the shared dashboard the globe links to. Understand
+   what that publishes: individual session records, each with city, browser, OS,
+   referrer and timestamps, readable by anyone who clicks the globe. This is the
+   same shape of exposure that makes MapMyVisitors' public dashboards a liability;
+   it is a choice here, not an oversight. Untick it to undo, or keep it and unset
+   `UMAMI_SHARE_URL` so the dashboard stops being linked publicly.
+
+   **There is no IP column, and cannot be.** Umami hashes visitor IPs into session
+   IDs at ingest and never stores them, so no share setting or plan exposes them.
+   `Realtime` likewise shows live visitors to anyone with the link.
 
    You then get a URL like
    `https://cloud.umami.is/share/aB3xY9zQ7pKm/adhirajghosh.github.io`.
@@ -91,9 +97,9 @@ The slug is kept in a secret so it stays out of this repo's git history. Note
 that it is **no longer confidential in effect**: the globe links to the shared
 dashboard, and the build writes that URL — slug included — into
 `data/visitor-globe.json`, which ships publicly. Anyone who clicks the globe can
-read whatever the share exposes. That makes "check only `Overview`" a hard
-requirement rather than good hygiene. To take the link away again, unset
-`shareUrl` (see `UMAMI_SHARE_URL` below) and the globe goes back to being inert.
+read whatever the share exposes — currently `Overview` plus `Sessions`. To take
+the link away again, set `UMAMI_SHARE_URL` to an empty string (see below) and the
+globe goes back to being inert.
 
 The slug is not required for the analytics themselves to work.
 
