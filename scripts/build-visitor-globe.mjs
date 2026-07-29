@@ -52,6 +52,21 @@ const BASE_URL = (process.env.UMAMI_BASE_URL
   || `https://cloud.umami.is/analytics/${REGION}/api`).replace(/\/$/, '');
 const EXPECT_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID;
 
+// Public URL of the shared dashboard, written into the JSON so the globe can link
+// to it. Derived from the slug rather than hardcoded in index.html, which keeps
+// the slug out of git history — but be clear-eyed that publishing this makes the
+// dashboard world-readable, so the share must expose Overview only. Umami resolves
+// a share by its slug and treats the trailing segment as a label, hence the
+// override for a website named something other than the domain.
+const SHARE_LABEL = process.env.UMAMI_SHARE_NAME || 'adhirajghosh.github.io';
+// Checked against undefined, not falsiness, so UMAMI_SHARE_URL='' is an explicit
+// "publish no link" rather than silently falling back to the derived URL.
+const SHARE_URL = process.env.UMAMI_SHARE_URL !== undefined
+  ? process.env.UMAMI_SHARE_URL
+  : (SLUG
+    ? `https://cloud.umami.is/share/${encodeURIComponent(SLUG)}/${encodeURIComponent(SHARE_LABEL)}`
+    : '');
+
 // cobe marker sizes. Log-scaled between these bounds: city session counts have a
 // brutal long tail (typically ~17% of cities have exactly one session), so a
 // linear scale would render everything except the top few as invisible.
@@ -202,6 +217,9 @@ async function main() {
   const payload = {
     generatedAt: new Date(endAt).toISOString(),
     since: new Date(startAt).toISOString().slice(0, 10),
+    // Clicking the globe opens this. null leaves the globe unlinked rather than
+    // shipping a dead href.
+    shareUrl: SHARE_URL || null,
     totals: {
       visitors: toNumber(stats?.visitors),
       pageviews: toNumber(stats?.pageviews),
@@ -210,7 +228,8 @@ async function main() {
       cities: cities.length,
     },
     // Sessions on the map versus sessions Umami could place in a country at all.
-    // Surfaced so the page can be honest about how much traffic is represented.
+    // No longer rendered on the page; kept as the diagnostic for "why are there
+    // fewer dots than I expect", alongside the geocoder counts in the run log.
     coverage: {
       mappedSessions: drawn.reduce((n, d) => n + d.sessions, 0),
       countrySessions: countries.reduce((n, c) => n + c.sessions, 0),

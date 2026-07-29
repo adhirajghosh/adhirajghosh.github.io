@@ -87,8 +87,15 @@ Only **one** secret is needed.
 3. Trigger a deploy — push anything, or **Actions → "Deploy static content to
    Pages" → Run workflow**.
 
-The slug is kept in a secret only because anyone holding it can read your full
-Umami dashboard. It is not required for the analytics themselves to work.
+The slug is kept in a secret so it stays out of this repo's git history. Note
+that it is **no longer confidential in effect**: the globe links to the shared
+dashboard, and the build writes that URL — slug included — into
+`data/visitor-globe.json`, which ships publicly. Anyone who clicks the globe can
+read whatever the share exposes. That makes "check only `Overview`" a hard
+requirement rather than good hygiene. To take the link away again, unset
+`shareUrl` (see `UMAMI_SHARE_URL` below) and the globe goes back to being inert.
+
+The slug is not required for the analytics themselves to work.
 
 Then check the run log for `Refresh visitor globe data`. On success:
 
@@ -160,6 +167,13 @@ Optional environment overrides:
 - `UMAMI_START` — ISO date to count from. Defaults to `2024-01-01`.
 - `UMAMI_REGION` — `us` (default) or `eu`.
 - `UMAMI_BASE_URL` — full override. Self-hosted Umami uses `https://<host>/api`.
+- `UMAMI_SHARE_URL` — the dashboard URL the globe links to. Defaults to
+  `https://cloud.umami.is/share/<slug>/adhirajghosh.github.io`, built from the
+  slug. Set it to a literal URL to override, or to an empty string to publish no
+  link at all (the globe still renders, it just stops being clickable).
+- `UMAMI_SHARE_NAME` — only the trailing label in that default URL. Umami resolves
+  a share by its slug, so this matters only if the website is named something
+  other than the domain.
 
 To test locally:
 

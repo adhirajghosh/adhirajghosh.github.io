@@ -75,7 +75,7 @@ async function init(root) {
 
   root.hidden = false;
   renderText(root, data);
-  renderGlobe(root, markers);
+  renderGlobe(root, markers, linkDashboard(root, data));
 }
 
 // Builds "🇩🇪 Germany 412" rows. Uses textContent throughout: city names arrive
@@ -108,7 +108,6 @@ function renderList(container, heading, rows) {
 
 function renderText(root, data) {
   const caption = root.querySelector('[data-globe-caption]');
-  const note = root.querySelector('[data-globe-note]');
   const totals = data.totals || {};
 
   if (caption) {
@@ -129,24 +128,27 @@ function renderText(root, data) {
     'Top cities',
     (data.cities || []).map((c) => ({ code: c.country, label: c.city, sessions: c.sessions })),
   );
-
-  // Say plainly how much of the traffic the dots actually represent, and that
-  // unresolvable cities are shown on their country rather than omitted.
-  if (note) {
-    const cov = data.coverage || {};
-    const parts = [];
-    if (cov.citiesTotal) parts.push(`${cov.citiesGeocoded}/${cov.citiesTotal} cities located`);
-    if (cov.countrySessions && cov.mappedSessions) {
-      const pct = Math.round((cov.mappedSessions / cov.countrySessions) * 100);
-      parts.push(`${pct}% of located sessions shown`);
-    }
-    note.textContent = parts.length
-      ? `${parts.join(' · ')}. Sessions without a resolvable city are shown on their country.`
-      : '';
-  }
 }
 
-function renderGlobe(root, markers) {
+// Points the globe at the public Umami dashboard. The URL is written into
+// visitor-globe.json at build time rather than hardcoded here, so the share slug
+// it contains stays out of the repo's history. https-only, because the value
+// arrives from a build-time env var and this assigns it to an href.
+function linkDashboard(root, data) {
+  const link = root.querySelector('[data-globe-link]');
+  const url = typeof data.shareUrl === 'string' ? data.shareUrl : '';
+  if (!link || !url.startsWith('https://')) return null;
+
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.title = 'Open the visitor dashboard';
+  const canvas = link.querySelector('canvas');
+  if (canvas) canvas.setAttribute('aria-label', `${canvas.getAttribute('aria-label')}. Opens the visitor dashboard.`);
+  return link;
+}
+
+function renderGlobe(root, markers, link) {
   const canvas = root.querySelector('canvas');
   let size = measure(root);
   canvas.style.width = `${size}px`;
@@ -162,10 +164,10 @@ function renderGlobe(root, markers) {
     markers: markers.map(({ location, size: markerSize }) => ({ location, size: markerSize })),
   });
 
-  animate(root, canvas, globe, () => size, (next) => { size = next; });
+  animate(root, canvas, globe, () => size, (next) => { size = next; }, link);
 }
 
-function animate(root, canvas, globe, getSize, setSize) {
+function animate(root, canvas, globe, getSize, setSize, link) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let phi = 0;
@@ -176,6 +178,10 @@ function animate(root, canvas, globe, getSize, setSize) {
   let dragging = false;
   let dragStartX = 0;
   let phiAtDragStart = 0;
+  // How far this pointer travelled, so a drag that ends on the globe is not also
+  // treated as a click on the dashboard link wrapping it.
+  let dragDistance = 0;
+  const DRAG_SLOP = 4;
 
   const draw = () => {
     if (!dragging && !reduceMotion) phi += ROTATION_PER_FRAME;
@@ -204,24 +210,39 @@ function animate(root, canvas, globe, getSize, setSize) {
   }
   document.addEventListener('visibilitychange', sync);
 
-  canvas.style.cursor = 'grab';
+  // 'pointer' when the globe is a link, so it reads as clickable; plain 'grab'
+  // otherwise, when spinning it is all it does.
+  const idleCursor = link ? 'pointer' : 'grab';
+  canvas.style.cursor = idleCursor;
   canvas.addEventListener('pointerdown', (event) => {
     dragging = true;
     dragStartX = event.clientX;
     phiAtDragStart = phi;
+    dragDistance = 0;
     canvas.style.cursor = 'grabbing';
     canvas.setPointerCapture(event.pointerId);
   });
   canvas.addEventListener('pointermove', (event) => {
     if (!dragging) return;
+    dragDistance = Math.max(dragDistance, Math.abs(event.clientX - dragStartX));
     phi = phiAtDragStart + (event.clientX - dragStartX) / 200;
   });
   const endDrag = () => {
     dragging = false;
-    canvas.style.cursor = 'grab';
+    canvas.style.cursor = idleCursor;
   };
   canvas.addEventListener('pointerup', endDrag);
   canvas.addEventListener('pointercancel', endDrag);
+
+  // Spinning the globe should not navigate. Keyboard activation reports no
+  // pointer movement, so it still follows the link.
+  if (link) {
+    link.addEventListener('click', (event) => {
+      if (dragDistance > DRAG_SLOP) event.preventDefault();
+      dragDistance = 0;
+    });
+    link.addEventListener('dragstart', (event) => event.preventDefault());
+  }
 
   let resizeTimer = null;
   window.addEventListener('resize', () => {

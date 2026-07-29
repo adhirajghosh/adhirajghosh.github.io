@@ -371,7 +371,13 @@
         <td style="padding:20px;width:100%;vertical-align:middle;text-align:center">
           <heading>Visitors</heading>
           <p style="margin:10px 0 0 0">
-            <canvas width="260" height="260" style="width:260px;height:260px;max-width:100%;display:inline-block;touch-action:pan-y" aria-label="Rotating globe with a dot on each city this site's visitors come from"></canvas>
+            <!-- The anchor gets its href at runtime from the shareUrl in
+                 visitor-globe.json, and stays a plain inert wrapper when that
+                 field is absent, so no dead link ships if the share URL is not
+                 configured. -->
+            <a data-globe-link style="display:inline-block;text-decoration:none;border:0">
+              <canvas width="260" height="260" style="width:260px;height:260px;max-width:100%;display:inline-block;touch-action:pan-y" aria-label="Rotating globe with a dot on each city this site's visitors come from"></canvas>
+            </a>
           </p>
           <p data-globe-caption style="margin:2px 0 0 0;color:#555"></p>
           <table style="width:100%;max-width:520px;border:0px;border-spacing:0px;margin:14px auto 0 auto">
@@ -382,7 +388,6 @@
               </tr>
             </tbody>
           </table>
-          <p data-globe-note style="margin:12px 0 0 0;font-size:11px;color:#999"></p>
         </td>
       </tr>
     </tbody>
