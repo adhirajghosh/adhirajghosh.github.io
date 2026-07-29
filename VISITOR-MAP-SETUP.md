@@ -137,12 +137,12 @@ results are re-ranked rather than taking the first.
 `data/seed-cities.json` holds **20 invented cities** across China, India and the
 UK, merged into the globe by the build. Nobody from those cities visited the
 site. They exist so the globe renders as populated, and they are the reason the
-country and city lists are led by IN/CN/GB rather than by DE.
+country and city lists are led by CN/IN/GB rather than by DE.
 
 What this means in practice:
 
 - The **top countries and top cities lists are not analytics.** Their session
-  counts are a mix of measured traffic and 128 invented sessions. Do not cite
+  counts are a mix of measured traffic and 165 invented sessions. Do not cite
   them, and do not reason about reach from them.
 - The **Umami dashboard behind the globe is still honest** — it shows only real
   traffic. So the globe and the dashboard it links to disagree, by design. Anyone

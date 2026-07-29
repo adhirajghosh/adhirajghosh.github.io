@@ -2,25 +2,25 @@
   "_note": "SYNTHETIC visitor data, merged into the globe by scripts/build-visitor-globe.mjs. These sessions did not happen: nobody from these cities visited the site. They exist so the globe renders as populated. Anything derived from the globe's country/city lists or session counts is therefore not a measurement. Set enabled to false, or delete this file, to go back to real traffic only.",
   "enabled": true,
   "cities": [
+    { "city": "Shanghai", "country": "CN", "sessions": 19, "location": [31.2304, 121.4737] },
+    { "city": "Beijing", "country": "CN", "sessions": 17, "location": [39.9042, 116.4074] },
     { "city": "London", "country": "GB", "sessions": 14, "location": [51.5074, -0.1278] },
+    { "city": "Shenzhen", "country": "CN", "sessions": 13, "location": [22.5431, 114.0579] },
     { "city": "Bengaluru", "country": "IN", "sessions": 12, "location": [12.9716, 77.5946] },
-    { "city": "Shanghai", "country": "CN", "sessions": 11, "location": [31.2304, 121.4737] },
-    { "city": "Beijing", "country": "CN", "sessions": 10, "location": [39.9042, 116.4074] },
+    { "city": "Guangzhou", "country": "CN", "sessions": 10, "location": [23.1291, 113.2644] },
     { "city": "Mumbai", "country": "IN", "sessions": 9, "location": [19.076, 72.8777] },
     { "city": "Delhi", "country": "IN", "sessions": 8, "location": [28.6139, 77.209] },
+    { "city": "Hangzhou", "country": "CN", "sessions": 8, "location": [30.2741, 120.1551] },
     { "city": "Cambridge", "country": "GB", "sessions": 7, "location": [52.2053, 0.1218] },
-    { "city": "Shenzhen", "country": "CN", "sessions": 7, "location": [22.5431, 114.0579] },
+    { "city": "Chengdu", "country": "CN", "sessions": 7, "location": [30.5728, 104.0668] },
     { "city": "Hyderabad", "country": "IN", "sessions": 6, "location": [17.385, 78.4867] },
     { "city": "Edinburgh", "country": "GB", "sessions": 6, "location": [55.9533, -3.1883] },
-    { "city": "Guangzhou", "country": "CN", "sessions": 5, "location": [23.1291, 113.2644] },
+    { "city": "Wuhan", "country": "CN", "sessions": 5, "location": [30.5928, 114.3055] },
     { "city": "Oxford", "country": "GB", "sessions": 5, "location": [51.752, -1.2577] },
     { "city": "Chennai", "country": "IN", "sessions": 5, "location": [13.0827, 80.2707] },
     { "city": "Manchester", "country": "GB", "sessions": 4, "location": [53.4808, -2.2426] },
-    { "city": "Hangzhou", "country": "CN", "sessions": 4, "location": [30.2741, 120.1551] },
     { "city": "Pune", "country": "IN", "sessions": 4, "location": [18.5204, 73.8567] },
-    { "city": "Chengdu", "country": "CN", "sessions": 3, "location": [30.5728, 104.0668] },
     { "city": "Bristol", "country": "GB", "sessions": 3, "location": [51.4545, -2.5879] },
-    { "city": "Kolkata", "country": "IN", "sessions": 3, "location": [22.5726, 88.3639] },
-    { "city": "Wuhan", "country": "CN", "sessions": 2, "location": [30.5928, 114.3055] }
+    { "city": "Kolkata", "country": "IN", "sessions": 3, "location": [22.5726, 88.3639] }
   ]
 }
