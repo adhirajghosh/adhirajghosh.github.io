@@ -45,6 +45,7 @@ import { createGeocoder } from './geocode.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = resolve(ROOT, 'data/visitor-globe.json');
 const CACHE = resolve(ROOT, 'data/geo-cache.json');
+const SEED = resolve(ROOT, 'data/seed-cities.json');
 
 const SLUG = process.env.UMAMI_SHARE_SLUG;
 const REGION = process.env.UMAMI_REGION || 'us';
@@ -115,6 +116,29 @@ async function readCache() {
   } catch {
     return { version: 1, hits: {}, misses: {} };
   }
+}
+
+// Synthetic cities merged in alongside the real ones. These are invented sessions
+// that no visitor generated — see data/seed-cities.json. Kept in its own file, and
+// flagged in the output, so the globe's numbers can always be told apart from
+// measured traffic. Coordinates are carried in the file rather than geocoded, so
+// seeding costs no lookups and cannot pollute the geocode cache.
+async function readSeed() {
+  let raw;
+  try {
+    raw = JSON.parse(await readFile(SEED, 'utf8'));
+  } catch {
+    return [];
+  }
+  if (!raw?.enabled || !Array.isArray(raw.cities)) return [];
+  return raw.cities.filter((c) => (
+    typeof c?.city === 'string'
+    && typeof c?.country === 'string'
+    && Number(c?.sessions) > 0
+    && Array.isArray(c?.location)
+    && c.location.length === 2
+    && c.location.every((n) => typeof n === 'number' && Number.isFinite(n))
+  ));
 }
 
 async function main() {
@@ -190,6 +214,24 @@ async function main() {
     }
   }
 
+  // Merge the synthetic cities after geocoding, so they neither consume lookups
+  // nor land in the cache. They join both the placed dots and the city list, and
+  // their sessions are added to their country's total, which keeps the
+  // country-centroid remainder below from double counting them.
+  const seedCities = await readSeed();
+  for (const s of seedCities) {
+    placed.push({ city: s.city, country: s.country, sessions: s.sessions, location: s.location });
+    cities.push({ city: s.city, country: s.country, sessions: s.sessions });
+    const existing = countries.find((c) => c.country === s.country);
+    if (existing) existing.sessions += s.sessions;
+    else countries.push({ country: s.country, sessions: s.sessions });
+  }
+  if (seedCities.length) {
+    cities.sort((a, b) => b.sessions - a.sessions);
+    countries.sort((a, b) => b.sessions - a.sessions);
+  }
+  const seededSessions = seedCities.reduce((n, s) => n + s.sessions, 0);
+
   // Sessions Umami placed in a country but not in any city, plus cities that
   // would not geocode, both collapse to a single dot on the country centroid.
   // They are shown rather than dropped, because dropping them would understate
@@ -222,10 +264,15 @@ async function main() {
     // Clicking the globe opens this. null leaves the globe unlinked rather than
     // shipping a dead href.
     shareUrl: SHARE_URL || null,
+    // How many of the sessions below are invented rather than measured, so this
+    // file never passes itself off as pure analytics. 0 means everything is real.
+    seededSessions,
     totals: {
-      visitors: toNumber(stats?.visitors),
-      pageviews: toNumber(stats?.pageviews),
-      sessions: totalSessions,
+      // Seeded sessions are folded in so these do not contradict the per-country
+      // and per-city rows, which already include them.
+      visitors: toNumber(stats?.visitors) + seededSessions,
+      pageviews: toNumber(stats?.pageviews) + seededSessions,
+      sessions: totalSessions + seededSessions,
       countries: countries.length,
       cities: cities.length,
     },
@@ -258,6 +305,13 @@ async function main() {
     `visitor-globe: geocoder cached=${g.cached} resolved=${g.resolved} ` +
     `failed=${g.failed} skipped-recent-miss=${g.skipped}`,
   );
+  if (seedCities.length) {
+    console.warn(
+      `visitor-globe: ${seedCities.length} SEEDED cities contributing ${seededSessions} ` +
+      'invented sessions are included in the above. These are not real visitors. ' +
+      'Set enabled:false in data/seed-cities.json to show measured traffic only.',
+    );
+  }
   if (g.capped) {
     console.warn(
       `visitor-globe: ${g.capped} city lookup(s) hit the per-run cap and were not ` +
