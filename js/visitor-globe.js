@@ -107,17 +107,6 @@ function renderList(container, heading, rows) {
 }
 
 function renderText(root, data) {
-  const caption = root.querySelector('[data-globe-caption]');
-  const totals = data.totals || {};
-
-  if (caption) {
-    const visitors = totals.visitors || 0;
-    const bits = [`${visitors.toLocaleString('en-US')} ${visitors === 1 ? 'visitor' : 'visitors'}`];
-    if (totals.countries) bits.push(`${totals.countries} ${totals.countries === 1 ? 'country' : 'countries'}`);
-    if (totals.cities) bits.push(`${totals.cities} ${totals.cities === 1 ? 'city' : 'cities'}`);
-    caption.textContent = bits.join(' · ') + (data.since ? ` · since ${data.since}` : '');
-  }
-
   renderList(
     root.querySelector('[data-globe-countries]'),
     'Top countries',
