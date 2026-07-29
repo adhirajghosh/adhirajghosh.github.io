@@ -132,30 +132,6 @@ is always passed and the returned country asserted; and its ranking is not by
 population (`Springfield` returns Missouri before the larger Massachusetts), so
 results are re-ranked rather than taking the first.
 
-### Seeded cities — the globe is not purely measured
-
-`data/seed-cities.json` holds **20 invented cities** across China, India and the
-UK, merged into the globe by the build. Nobody from those cities visited the
-site. They exist so the globe renders as populated, and they are the reason the
-country and city lists are led by CN/IN/GB rather than by DE.
-
-What this means in practice:
-
-- The **top countries and top cities lists are not analytics.** Their session
-  counts are a mix of measured traffic and 165 invented sessions. Do not cite
-  them, and do not reason about reach from them.
-- The **Umami dashboard behind the globe is still honest** — it shows only real
-  traffic. So the globe and the dashboard it links to disagree, by design. Anyone
-  comparing the two will notice.
-- `seededSessions` in `data/visitor-globe.json` records the invented total, and
-  the build logs a warning naming the count, so this is discoverable from the
-  output alone rather than only from this file.
-
-To go back to measured traffic only, set `"enabled": false` in
-`data/seed-cities.json` (or delete the file) and redeploy. Nothing else needs
-changing: coordinates travel with the seed entries, so seeding costs no geocoder
-calls and never enters `data/geo-cache.json`.
-
 ### Notes and gotchas
 
 - **The counts are sessions, not visitors.** Umami's geo metrics are
