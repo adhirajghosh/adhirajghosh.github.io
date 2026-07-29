@@ -223,12 +223,10 @@ Optional environment overrides:
 - `UMAMI_REGION` — `us` (default) or `eu`.
 - `UMAMI_BASE_URL` — full override. Self-hosted Umami uses `https://<host>/api`.
 - `UMAMI_SHARE_URL` — the dashboard URL the globe links to. Defaults to
-  `https://cloud.umami.is/share/<slug>/adhirajghosh.github.io`, built from the
-  slug. Set it to a literal URL to override, or to an empty string to publish no
-  link at all (the globe still renders, it just stops being clickable).
-- `UMAMI_SHARE_NAME` — only the trailing label in that default URL. Umami resolves
-  a share by its slug, so this matters only if the website is named something
-  other than the domain.
+  `https://cloud.umami.is/analytics/<region>/share/<slug>`, which is the canonical
+  form Umami hands out. Set it to a literal URL to override — use this to land on
+  a specific tab, e.g. `.../share/<slug>/sessions` — or to an empty string to
+  publish no link at all (the globe still renders, it just stops being clickable).
 
 To test locally:
 

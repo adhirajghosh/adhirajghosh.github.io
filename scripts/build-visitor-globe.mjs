@@ -61,13 +61,16 @@ const EXPECT_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID;
 // UMAMI_SHARE_URL='' to stop publishing the link. Umami resolves a share by its
 // slug and treats the trailing segment as a label, hence the override for a
 // website named something other than the domain.
-const SHARE_LABEL = process.env.UMAMI_SHARE_NAME || 'adhirajghosh.github.io';
+// Region-scoped, which is the canonical form Umami itself hands out:
+// https://cloud.umami.is/analytics/us/share/<slug>. The shorter
+// /share/<slug>/<name> form also works but 307s to this one, so build it
+// directly and save the redirect.
 // Checked against undefined, not falsiness, so UMAMI_SHARE_URL='' is an explicit
 // "publish no link" rather than silently falling back to the derived URL.
 const SHARE_URL = process.env.UMAMI_SHARE_URL !== undefined
   ? process.env.UMAMI_SHARE_URL
   : (SLUG
-    ? `https://cloud.umami.is/share/${encodeURIComponent(SLUG)}/${encodeURIComponent(SHARE_LABEL)}`
+    ? `https://cloud.umami.is/analytics/${encodeURIComponent(REGION)}/share/${encodeURIComponent(SLUG)}`
     : '');
 
 // cobe marker sizes. Log-scaled between these bounds: city session counts have a
