@@ -17,6 +17,14 @@
     "stuttgart|DE": [
       48.7823,
       9.177
+    ],
+    "reutlingen|DE": [
+      48.4914,
+      9.2043
+    ],
+    "bengaluru|IN": [
+      12.9719,
+      77.5937
     ]
   },
   "misses": {}
