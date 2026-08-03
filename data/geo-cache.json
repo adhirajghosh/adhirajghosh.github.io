@@ -43,5 +43,11 @@
       -122.1215
     ]
   },
-  "misses": {}
+  "misses": {
+    "buk-gu|KR": {
+      "tries": 1,
+      "lastTried": "2026-08-03",
+      "reason": "no-results"
+    }
+  }
 }
