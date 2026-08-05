@@ -49,6 +49,14 @@
     "mountain view|US": [
       35.8684,
       -92.1176
+    ],
+    "khabarovsk|RU": [
+      48.462,
+      135.0971
+    ],
+    "san francisco|US": [
+      37.7749,
+      -122.4194
     ]
   },
   "misses": {
