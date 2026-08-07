@@ -65,6 +65,22 @@
     "chennai|IN": [
       13.0878,
       80.2785
+    ],
+    "hong kong|HK": [
+      22.2783,
+      114.1747
+    ],
+    "canary wharf|GB": [
+      51.5052,
+      -0.0209
+    ],
+    "staten island|US": [
+      40.5623,
+      -74.1399
+    ],
+    "magnitogorsk|RU": [
+      53.3981,
+      59.0066
     ]
   },
   "misses": {
