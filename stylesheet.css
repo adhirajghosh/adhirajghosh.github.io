@@ -109,6 +109,11 @@ name {
   width: 160px;
   height: 160px;
   position: relative;
+  /* Centres short figures (wide, low-aspect ones especially) inside the fixed
+     160px box, so every thumbnail lines up with the middle of its text block. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .two {

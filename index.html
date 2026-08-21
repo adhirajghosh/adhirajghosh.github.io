@@ -18,7 +18,7 @@
       <td style="padding:0px">
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <tr style="padding:0px">
-            <td style="padding:2.5%;width:63%;vertical-align:middle">
+            <td style="padding:2.5%;width:66%;vertical-align:middle">
               <p style="text-align:center">
                 <name>Adhiraj Ghosh</name>
               </p>
@@ -35,19 +35,21 @@
 	      <p>
                       I am currently working on (A) curating the best pretraining dataset for MLLMs and (B) studying how recycling image-text pairs into more informative samples can improve MLLM training regimes. I am very eager to collaborate on related projects, so please reach out if you are interested!
               </p>
-              <p style="text-align:center">
+              <p style="text-align:center;margin-bottom:0">
                 <a href="mailto:adhirajghosh1998@gmail.com">Email</a> &nbsp/&nbsp
                 <a href="data/Adhiraj_Ghosh_Resume.pdf">CV</a> &nbsp/&nbsp
                 <a href="https://scholar.google.com/citations?hl=en&user=t_Q2mvsAAAAJ">Google Scholar</a> &nbsp/&nbsp
-                <a href="https://github.com/adhirajghosh/">Github</a> &nbsp/&nbsp
+                <a href="https://github.com/adhirajghosh/">Github</a>
+              </p>
+              <p style="text-align:center;margin-top:4px">
 		<a href="https://x.com/adhiraj_ghosh98">Twitter</a> &nbsp/&nbsp
 		<!-- <a href="https://bsky.app/profile/adhirajghosh.bsky.social">Bluesky</a> &nbsp/&nbsp -->
         <!-- <a href="https://linkedin.com/in/adhiraj-ghosh/">LinkedIn</a> &nbsp/&nbsp -->
         <a href="images/weixin_qr.png" target="_blank" rel="noopener">WeChat(微信)</a> &nbsp/&nbsp
-		<a href="https://www.youtube.com/channel/UCHSNLabIVYS4X7SZMz-2KjQ">YouTube</a>
+        <a href="images/xhs.jpeg" target="_blank" rel="noopener">Rednote(小红书)</a>
               </p>
             </td>
-            <td style="padding:2.5%;width:40%;max-width:40%">
+            <td style="padding:2.5%;width:37%;max-width:37%">
               <a href="images/profile.png"><img style="width:100%;max-width:100%" alt="profile photo" src="images/profile_circle.png" class="hoverZoomLink"></a>
             </td>
           </tr>
@@ -60,6 +62,7 @@
 	      <td style="padding:20px;width:100%;vertical-align:middle">
 	        <h2>Recent News</h2>
 	        <ul>
+			  <li><strong>Jun 2026 :</strong> DataComp-VLM is out! A benchmark to find the best data for training VLMs. Check out the <a href="https://arxiv.org/pdf/2606.28551">paper</a> and <a href="https://github.com/mlfoundations/dcvlm">code</a>!</li>
 			  <li><strong>Feb 2026 :</strong> Work on concept-aware online batch sampling accepted at CVPR! </li>
 			  <li><strong>Jun 2025 :</strong> Started my PhD! </li>
 	          <li><strong>May 2025 :</strong> ONEBench accepted at ACL 2025 as a poster!</li>
@@ -127,6 +130,39 @@
 		<tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
               	<td style="padding:20px;width:25%;vertical-align:middle">
                 <div class="one">
+                  <img src='images/dcvlm.png' width="160">
+                </div>
+                <script type="text/javascript">
+                  function clipnerf_start() {
+                    document.getElementById('clipnerf_image').style.opacity = "1";
+                  }
+
+                  function clipnerf_stop() {
+                    document.getElementById('clipnerf_image').style.opacity = "0";
+                  }
+                  clipnerf_stop()
+                </script>
+              </td>
+              <td style="padding:20px;width:75%;vertical-align:middle">
+                  <papertitle>DataComp-VLM: Improved Open Datasets for Vision-Language Models </papertitle>
+                <br>
+                Matteo Farina<sup>*</sup>, Vishaal Udandarao<sup>*</sup>, Thao Nguyen<sup>*</sup>, <strong>Adhiraj Ghosh</strong><sup>&dagger;</sup>, Selim Kuzucu<sup>&dagger;</sup>, et al.
+                <br>
+                <em style="font-size:small"><sup>*</sup>Project leads, <sup>&dagger;</sup>Core contributors</em>
+                <br>
+                <em>arXiv 2026</em>
+                <br>
+		<a href="https://www.datacomp.ai/dcvlm/">Project Page </a> / 
+		<a href="https://arxiv.org/pdf/2606.28551">Paper </a> / 
+				  <a href="https://github.com/mlfoundations/dcvlm">Code </a>
+                <br>
+                <p> To study data curation for vision-language models under controlled conditions, we introduce DCVLM, a benchmark pooling 160 datasets of image-caption pairs, multimodal documents, text-only and instruction-tuning data into 6T multimodal tokens. We show that data mixing, not filtering, is key to high-quality training data, and release DCVLM-Baseline, a mixture that improves over FineVision, the state-of-the-art open VLM dataset, by 5.4pp. </p>
+              </td>
+            </tr> 
+			  
+		<tr onmouseout="clipnerf_stop()" onmouseover="clipnerf_start()">
+              	<td style="padding:20px;width:25%;vertical-align:middle">
+                <div class="one">
                   <img src='images/cabs.png' width="160">
                 </div>
                 <script type="text/javascript">
@@ -183,7 +219,7 @@
 				  <a href="https://arxiv.org/pdf/2412.06745">Paper </a> /
 				  <a href="https://github.com/bethgelab/onebench">Code </a>
                 <br>
-                <p> To evaluate the vast capabilities of foundation models, we introduce ONEBench – a benchmark that unifies individual test sets into a vast pool of individual data-measurement samples. We shift the focus from singular test-sets to sample-level evaluations, re-structuring static benchmarks to accommodate an ever-expanding pool of datasets and models. </p>
+                <p> To evaluate the vast capabilities of foundation models, we introduce ONEBench – a benchmark that unifies individual test sets into a single pool of data-measurement samples. We shift the focus from singular test-sets to sample-level evaluations, re-structuring static benchmarks to accommodate an ever-expanding pool of datasets and models. </p>
               </td>
             </tr> 
 		  
@@ -247,7 +283,7 @@
 		<a href="https://huggingface.co/fittar/ViPE-M-CTX7">HuggingFace </a> / 
 		<a href="https://github.com/Hazel1994/ViPE-Videos">Music Videos </a>    
                 <br>
-                <p> ViPE is the first automated model for translating any arbitrary piece of text into a visualisable prompt. It helps any text-to-image model in figurative or non-lexical language visualisations. </p>
+                <p> ViPE is the first automated model for translating arbitrary text into a visualisable prompt. It helps any text-to-image model in figurative or non-lexical language visualisations. </p>
               </td>
             </tr> 
 
@@ -341,7 +377,7 @@
                 <a href="https://link.springer.com/chapter/10.1007/978-3-030-63467-4_9">Paper </a> /
                 <a href="data/ju_irony.rar">Dataset</a>
                 <p></p>
-                <p> This paper presents the description of the Bengali irony detection dataset developed by us and reports results obtained on our Bengali irony dataset using SOTA machine learning methodologies. </p>
+                <p> This paper presents the Bengali irony detection dataset developed by us and reports results obtained on it using SOTA machine learning methodologies. </p>
               </td>
             </tr>
 <!-- 
