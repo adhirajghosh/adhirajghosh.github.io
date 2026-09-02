@@ -205,8 +205,8 @@
   },
   "misses": {
     "buk-gu|KR": {
-      "tries": 1,
-      "lastTried": "2026-08-03",
+      "tries": 2,
+      "lastTried": "2026-09-02",
       "reason": "no-results"
     }
   }
