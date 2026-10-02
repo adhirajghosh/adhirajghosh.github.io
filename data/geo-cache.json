@@ -301,12 +301,16 @@
     "abu dhabi|AE": [
       24.4512,
       54.397
+    ],
+    "furtwangen im schwarzwald|DE": [
+      48.0516,
+      8.2072
     ]
   },
   "misses": {
     "buk-gu|KR": {
-      "tries": 2,
-      "lastTried": "2026-09-02",
+      "tries": 3,
+      "lastTried": "2026-10-02",
       "reason": "no-results"
     }
   }
