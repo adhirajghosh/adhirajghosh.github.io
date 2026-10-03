@@ -305,6 +305,22 @@
     "furtwangen im schwarzwald|DE": [
       48.0516,
       8.2072
+    ],
+    "delhi|IN": [
+      28.6519,
+      77.2315
+    ],
+    "eugene|US": [
+      44.0521,
+      -123.0867
+    ],
+    "milpitas|US": [
+      37.4283,
+      -121.9066
+    ],
+    "fullerton|US": [
+      41.3633,
+      -97.9692
     ]
   },
   "misses": {
