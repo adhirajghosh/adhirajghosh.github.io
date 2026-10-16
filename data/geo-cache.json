@@ -349,6 +349,14 @@
     "coraopolis|US": [
       40.5184,
       -80.1667
+    ],
+    "darmstadt|DE": [
+      49.8717,
+      8.6503
+    ],
+    "tower hamlets|GB": [
+      51.5114,
+      -0.0691
     ]
   },
   "misses": {
