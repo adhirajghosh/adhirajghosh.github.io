@@ -401,12 +401,16 @@
     "austin|US": [
       30.2672,
       -97.7431
+    ],
+    "palo alto|US": [
+      37.4419,
+      -122.143
     ]
   },
   "misses": {
     "buk-gu|KR": {
-      "tries": 3,
-      "lastTried": "2026-10-02",
+      "tries": 4,
+      "lastTried": "2026-11-01",
       "reason": "no-results"
     }
   }
